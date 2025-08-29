@@ -2,13 +2,13 @@
   "name": "note_app",
   "version": "1.0.0",
   "description": "Fullstack Notes Platform (Frontend + Backend) deployed together",
-  "main": "backend/dist/index.js",
+  "main": "Backend/dist/index.js",
   "type": "module",
   "scripts": {
-    "install": "cd Frontend && npm install && cd ../backend && npm install",
-    "build": "cd Frontend && npm run build",
-    "start": "cd backend && node dist/index.js",
-    "dev": "concurrently \"cd Frontend && npm run dev\" \"cd backend && npm run dev\""
+    "install": "cd Frontend && npm install && cd ../Backend && npm install",
+    "build": "cd Frontend && npm install --include=dev && npm run build && cd ../Backend && npm install && npm run build",
+    "start": "cd Backend && node dist/index.js",
+    "dev": "concurrently \"cd Frontend && npm run dev\" \"cd Backend && npm run dev\""
   },
   "repository": {
     "type": "git",
