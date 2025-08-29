@@ -112,7 +112,7 @@ const SignUp: React.FC = () => {
 
       // Fetch user profile after cookie-based login
       const profileResponse = await authAPI.getProfile();
-      login(profileResponse.data.user, ''); // token is in HTTP-only cookie
+      login(profileResponse.data.user, profileResponse.data.token); // token is in HTTP-only cookie
 
       toast.success('Account created successfully!');
       const from = location.state?.from?.pathname || '/dashboard';

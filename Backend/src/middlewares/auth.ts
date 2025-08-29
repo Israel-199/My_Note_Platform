@@ -10,7 +10,6 @@ export const authenticateToken = async (req: AuthRequest, res: Response, next: N
   try {
     // Get token from cookies first, then from Authorization header
     let token = req.cookies.token;
-    console.log(`token:${token}`);
 
     if (!token && req.headers.authorization) {
       const authHeader = req.headers.authorization;
