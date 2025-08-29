@@ -50,13 +50,14 @@ const __dirname = path.dirname(__filename);
 
 if (process.env.NODE_ENV === "production") {
   // Serve frontend build folder
-  app.use(express.static(path.join(__dirname, "../../frontend/dist")));
+  app.use(express.static(path.join(__dirname, "../Frontend/dist")));
 
   // Catch-all for SPA (React Router)
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
+    res.sendFile(path.join(__dirname, "../Frontend/dist/index.html"));
   });
 }
+
 
 // ---------------- Error Handling ----------------
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
