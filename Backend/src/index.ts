@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import app from './app.js';
+import path from "path";
+import { fileURLToPath } from "url";
+import express from "express";
 
 dotenv.config();
 const PORT = process.env.PORT || 5000;
@@ -32,4 +35,15 @@ process.on('SIGINT', async () => {
     console.error('Error during shutdown:', error);
     process.exit(1);
   }
+});
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve frontend build
+app.use(express.static(path.join(__dirname, "../../frontend/dist")));
+
+app.get("*", (_, res) => {
+  res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
 });
