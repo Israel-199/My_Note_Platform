@@ -1,0 +1,27 @@
+{
+  "name": "note_app",
+  "version": "1.0.0",
+  "description": "Fullstack Notes Platform (Frontend + Backend) deployed together",
+  "main": "backend/dist/index.js",
+  "type": "module",
+  "scripts": {
+    "install": "cd frontend && npm install && cd ../backend && npm install",
+    "build": "cd frontend && npm run build",
+    "start": "cd backend && node dist/index.js",
+    "dev": "concurrently \"cd frontend && npm run dev\" \"cd backend && npm run dev\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Israel-199/My_Note_Platform.git"
+  },
+  "keywords": ["notes", "mern", "fullstack", "react", "nodejs", "express", "mongodb"],
+  "author": "Israel Assefa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Israel-199/My_Note_Platform/issues"
+  },
+  "homepage": "https://github.com/Israel-199/My_Note_Platform#readme",
+  "dependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
