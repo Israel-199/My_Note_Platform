@@ -9,19 +9,17 @@ dotenv.config();
 const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGO_URI || "mongodb://localhost:27017/my-notes";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 if (process.env.NODE_ENV === "production") {
-  const frontendDist = path.join(__dirname, "../../Frontend/dist");
+  // Use project root + Frontend/dist
+  const frontendDist = path.join(process.cwd(), "Frontend/dist");
 
   app.use(express.static(frontendDist));
 
-  app.get("*", (req, res) => {
+  // SPA fallback
+  app.get("*", (_, res) => {
     res.sendFile(path.join(frontendDist, "index.html"));
   });
 }
-
 
 // ---------------- MongoDB Connection ----------------
 mongoose

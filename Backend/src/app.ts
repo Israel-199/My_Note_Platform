@@ -4,7 +4,6 @@ import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import path from "path";
-import { fileURLToPath } from "url";
 import authRoutes from "./routes/authRoutes.js";
 import noteRoutes from "./routes/noteRoutes.js";
 
@@ -45,18 +44,18 @@ app.get("/api/health", (req, res) => {
 });
 
 // ---------------- Serve Frontend ----------------
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 if (process.env.NODE_ENV === "production") {
-  const frontendDist = path.join(__dirname, "../../Frontend/dist");
+  // Use project root + Frontend/dist
+  const frontendDist = path.join(process.cwd(), "Frontend/dist");
 
   app.use(express.static(frontendDist));
 
-  app.get("*", (req, res) => {
+  // SPA fallback
+  app.get("*", (_, res) => {
     res.sendFile(path.join(frontendDist, "index.html"));
   });
 }
+
 // ---------------- Error Handling ----------------
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.error("Error:", err);
@@ -66,4 +65,3 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 });
 
 export default app;
-
