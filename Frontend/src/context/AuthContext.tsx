@@ -84,10 +84,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return;
       }
 
-      try {
-        const response = await authAPI.getProfile();
-        dispatch({ type: 'LOGIN', payload: response.data.user });
-      } catch (error: any) {
+      
+       try {
+  const response = await authAPI.getProfile();
+  console.log("Profile API response:", response.data.user);
+  dispatch({ type: 'LOGIN', payload: response.data.user });
+} 
+      catch (error: any) {
         console.error('Auth check failed:', error);
         localStorage.removeItem('user');
         localStorage.removeItem('token');

@@ -13,7 +13,6 @@ import NoteBook from '../assets/book.png';
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  
   const [notes, setNotes] = useState<Note[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreating, setIsCreating] = useState(false);
@@ -32,26 +31,15 @@ const Dashboard: React.FC = () => {
     setIsLoading(true);
     try {
       const response = await notesAPI.getNotes();
-      setNotes(response.data.notes);
+      setNotes(response.data?.notes ?? []); // always array
     } catch (error) {
       console.error('Failed to fetch notes:', error);
-      if (
-        typeof error === 'object' &&
-        error !== null &&
-        'response' in error &&
-        (error as any).response?.status === 401
-      ) {
-        toast.error('Session expired. Please login again.');
-        logout();
-        navigate('/signin');
-      } else {
-        toast.error('Failed to load notes');
-      }
+      setNotes([]); 
+      toast.error('Failed to load notes');
     } finally {
       setIsLoading(false);
     }
   };
-
   const handleCreateNote = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -144,8 +132,14 @@ const Dashboard: React.FC = () => {
             
             <div className="flex items-center space-x-4">
               <div className="hidden sm:block text-right">
+                {user ? (
+             <div>
                 <p className="text-sm font-medium text-gray-900">Welcome, {user?.fullName}!</p>
                 <p className="text-xs text-gray-500">{user?.email}</p>
+            </div>
+                    ) : (
+                <p>Loading user...</p>
+                 )}
               </div>
               <Button
                 variant="outline"
