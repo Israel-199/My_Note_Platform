@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import app from "./app.js";
 import path from "path";
-import { fileURLToPath } from "url";
 import express from "express";
 
 dotenv.config();
