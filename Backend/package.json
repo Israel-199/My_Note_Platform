@@ -5,11 +5,10 @@
   "description": "my Notes Backend Server",
   "main": "dist/index.js",
   "scripts": {
-  "dev": "tsx watch src/index.ts",
-  "build": "tsc",
-  "start": "node dist/index.js"
-}
-,
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.7",
