@@ -5,23 +5,14 @@
   "main": "Backend/dist/index.js",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"cd Frontend && npm run dev\" \"cd Backend && npm run dev\"",
-    "build": "cd Frontend && npm run build && cd ../Backend && npm run build",
-    "start": "node Backend/dist/index.js"
+    "build": "npm install --prefix Backend && npm install --prefix Frontend && npm run build --prefix Backend && npm run build --prefix Frontend",
+    "start": "npm run start --prefix Backend"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Israel-199/My_Note_Platform.git"
   },
-  "keywords": [
-    "notes",
-    "mern",
-    "fullstack",
-    "react",
-    "nodejs",
-    "express",
-    "mongodb"
-  ],
+  "keywords": ["notes", "mern", "fullstack", "react", "nodejs", "express", "mongodb"],
   "author": "Israel Assefa",
   "license": "ISC",
   "bugs": {
@@ -29,7 +20,6 @@
   },
   "homepage": "https://github.com/Israel-199/My_Note_Platform#readme",
   "dependencies": {
-    "concurrently": "^8.2.0",
-    "vite": "^7.1.3"
+    "concurrently": "^8.2.0"
   }
 }
