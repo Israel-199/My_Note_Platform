@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(frontendDist));
 
   // SPA fallback
-  app.get("*", (_, res) => {
+  app.get("*", (req, res) => {
     res.sendFile(path.join(frontendDist, "index.html"));
   });
 }
