@@ -15,7 +15,7 @@ const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
 app.use(
   helmet({
     contentSecurityPolicy: {
-      useDefaults: true,
+      useDefaults: false, // disable defaults
       directives: {
         "default-src": ["'self'"],
         "script-src": ["'self'", "'unsafe-inline'", "blob:"],
@@ -29,6 +29,7 @@ app.use(
     }
   })
 );
+
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
