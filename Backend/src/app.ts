@@ -38,19 +38,6 @@ app.use(cookieParser());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ---------------- Serve Frontend in Production ----------------
-if (process.env.NODE_ENV === "production") {
-  // Absolute path from Backend/dist → Frontend/dist
-  const frontendDist = path.resolve(__dirname, "../../Frontend/dist");
-  console.log("Serving frontend from:", frontendDist);
-
-  app.use(express.static(frontendDist));
-
-  // SPA fallback for React Router
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(frontendDist, "index.html"));
-  });
-
 // ---------------- API Routes ----------------
 app.use("/api/auth", authRoutes);
 app.use("/api/notes", noteRoutes);
@@ -60,13 +47,28 @@ app.get("/api/health", (req, res) => {
   res.status(200).json({ status: "OK", timestamp: new Date().toISOString() });
 });
 
-// ---------------- Error Handling ----------------
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.error("Error:", err);
-  res.status(err.status || 500).json({
-    error: err.message || "Internal server error",
+// ---------------- Serve Frontend in Production ----------------
+if (process.env.NODE_ENV === "production") {
+  const frontendDist = path.resolve(__dirname, "../../Frontend/dist");
+  console.log("Serving frontend from:", frontendDist);
+
+  // Serve static frontend
+  app.use(express.static(frontendDist));
+
+  // SPA fallback (must be last!)
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(frontendDist, "index.html"));
   });
-});
 }
+
+// ---------------- Error Handling ----------------
+app.use(
+  (err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    console.error("Error:", err);
+    res.status(err.status || 500).json({
+      error: err.message || "Internal server error",
+    });
+  }
+);
 
 export default app;
