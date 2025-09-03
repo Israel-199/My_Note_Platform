@@ -15,12 +15,12 @@ const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
 app.use(
   helmet({
     contentSecurityPolicy: {
-      useDefaults: false, // disable defaults
+      useDefaults: false, // important in v7
       directives: {
         "default-src": ["'self'"],
         "script-src": ["'self'", "'unsafe-inline'", "blob:"],
-        "script-src-elem": ["'self'", "'unsafe-inline'", "blob:"],
-        "worker-src": ["'self'", "blob:"],
+        "script-src-elem": ["'self'", "'unsafe-inline'", "blob:"], // fixes your blob issue
+        "worker-src": ["'self'", "blob:"], // allows Vite web workers
         "style-src": ["'self'", "'unsafe-inline'"],
         "img-src": ["'self'", "data:", "blob:"],
         "connect-src": ["'self'", "ws:", "http:", "https:"],
@@ -29,6 +29,7 @@ app.use(
     }
   })
 );
+
 
 
 const limiter = rateLimit({
