@@ -12,7 +12,21 @@ const app = express();
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
 
 // ---------------- Security ----------------
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        "default-src": ["'self'"],
+        "script-src": ["'self'", "'unsafe-inline'", "blob:"],
+        "style-src": ["'self'", "'unsafe-inline'"],
+        "img-src": ["'self'", "data:", "blob:"],
+        "connect-src": ["'self'", "ws:", "http:", "https:"],
+        "font-src": ["'self'", "data:"]
+      }
+    }
+  })
+);
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -21,6 +35,7 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
+// ---------------- CORS ----------------
 app.use(
   cors({
     origin: CLIENT_URL,
@@ -52,7 +67,6 @@ if (process.env.NODE_ENV === "production") {
   const frontendDist = path.resolve(__dirname, "../../Frontend/dist");
   console.log("Serving frontend from:", frontendDist);
 
-  // Serve static frontend
   app.use(express.static(frontendDist));
 
   // SPA fallback (must be last!)
