@@ -19,6 +19,8 @@ app.use(
       directives: {
         "default-src": ["'self'"],
         "script-src": ["'self'", "'unsafe-inline'", "blob:"],
+        "script-src-elem": ["'self'", "'unsafe-inline'", "blob:"],
+        "worker-src": ["'self'", "blob:"],
         "style-src": ["'self'", "'unsafe-inline'"],
         "img-src": ["'self'", "data:", "blob:"],
         "connect-src": ["'self'", "ws:", "http:", "https:"],
@@ -67,6 +69,7 @@ if (process.env.NODE_ENV === "production") {
   const frontendDist = path.resolve(__dirname, "../../Frontend/dist");
   console.log("Serving frontend from:", frontendDist);
 
+  // Serve static frontend files
   app.use(express.static(frontendDist));
 
   // SPA fallback (must be last!)
