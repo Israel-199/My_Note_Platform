@@ -12,6 +12,7 @@ const app = express();
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
 
 // ---------------- Security ----------------
+// ---------------- Security ----------------
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -19,7 +20,7 @@ app.use(
       directives: {
         "default-src": ["'self'"],
         "script-src": ["'self'", "'unsafe-inline'", "blob:"],
-        "script-src-elem": ["'self'", "'unsafe-inline'", "blob:"], // fixes your blob issue
+        "script-src-elem": ["'self'", "'unsafe-inline'", "blob:", "data:"], // <-- add "data:" here
         "worker-src": ["'self'", "blob:"], // allows Vite web workers
         "style-src": ["'self'", "'unsafe-inline'"],
         "img-src": ["'self'", "data:", "blob:"],
@@ -30,24 +31,6 @@ app.use(
   })
 );
 
-
-
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100,
-  message: "Too many requests from this IP, please try again later.",
-});
-app.use(limiter);
-
-// ---------------- CORS ----------------
-app.use(
-  cors({
-    origin: CLIENT_URL,
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
 
 // ---------------- Middleware ----------------
 app.use(express.json({ limit: "10mb" }));
