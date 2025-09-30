@@ -2,12 +2,11 @@
   "name": "my-notes-server",
   "version": "1.0.0",
   "type": "module",
-  "description": "my Notes Backend Server",
-  "main": "dist/index.js",
+  "description": "My Notes Backend Server",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -19,8 +18,7 @@
     "helmet": "^7.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.8.7",
-    "nodemailer": "^6.10.1",
-    "note_app": "file:.."
+    "nodemailer": "^6.10.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
