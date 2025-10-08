@@ -14,7 +14,15 @@
     "type": "git",
     "url": "git+https://github.com/Israel-199/My_Note_Platform.git"
   },
-  "keywords": ["notes", "mern", "fullstack", "react", "nodejs", "express", "mongodb"],
+  "keywords": [
+    "notes",
+    "mern",
+    "fullstack",
+    "react",
+    "nodejs",
+    "express",
+    "mongodb"
+  ],
   "author": "Israel Assefa",
   "license": "ISC",
   "bugs": {
@@ -22,6 +30,7 @@
   },
   "homepage": "https://github.com/Israel-199/My_Note_Platform#readme",
   "dependencies": {
-    "concurrently": "^8.2.0"
+    "concurrently": "^8.2.0",
+    "vite": "^7.1.9"
   }
 }
