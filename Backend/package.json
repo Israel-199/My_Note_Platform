@@ -4,6 +4,7 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
+    "prebuild": "npm install", 
     "dev": "nodemon --watch src --exec ts-node src/index.ts",
     "build": "tsc && cd ../Frontend && npm install && npm run build",
     "start": "node dist/index.js"
