@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: note-app
+    env: node
+    rootDir: Backend
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: PORT
+        value: 10000
