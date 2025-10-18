@@ -28,7 +28,6 @@ class OTPStore {
       userData
     });
 
-    // Clean up expired OTPs
     this.cleanExpiredOTPs();
 
     return otp;
