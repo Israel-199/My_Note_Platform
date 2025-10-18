@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import app from "./app.js";
+import cron from "node-cron";
+import axios from "axios";
 
 dotenv.config();
 
@@ -22,6 +24,21 @@ mongoose
             : process.env.CLIENT_URL || "http://localhost:5173"
         }`
       );
+
+      // ---------------- Keep Render Awake ----------------
+      if (process.env.RENDER_EXTERNAL_URL) {
+        const SELF_URL = process.env.RENDER_EXTERNAL_URL;
+
+        // Ping every 14 minutes
+        cron.schedule("*/14 * * * *", async () => {
+          try {
+            await axios.get(SELF_URL);
+            console.log("💓 Pinged Render to stay awake:", SELF_URL);
+          } catch (err) {
+            console.error("❌ Error pinging Render:", err.message);
+          }
+        });
+      }
     });
   })
   .catch((error) => {
