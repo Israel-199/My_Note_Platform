@@ -60,6 +60,6 @@ CLIENT_URL=http://localhost:5173
 
 ## env setup (Frontend)
 ```bash
-VITE_API_URL=http://localhost:5000/api
+VITE_API_URL=https://my-note-platform-8.onrender.com/api
 
 ```
