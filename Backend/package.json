@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "prebuild": "npm install",
-    "dev": "nodemon --watch src --exec ts-node src/index.ts",
+    "dev": "nodemon --watch src --exec tsx src/index.ts",
     "build": "tsc && cd ../Frontend && npm install && npm run build",
     "start": "node dist/index.js"
   },
@@ -37,6 +37,7 @@
   "devDependencies": {
     "nodemon": "^3.1.0",
     "ts-node": "^10.9.2",
+    "tsx": "^4.23.0",
     "typescript": "^5.7.3"
   }
 }
