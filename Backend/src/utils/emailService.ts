@@ -1,20 +1,7 @@
-import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 dotenv.config();
 
 class EmailService {
-  private transporter;
-
-  constructor() {
-    this.transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-  }
-
   async sendOTP(email: string, otp: string, purpose: 'signup' | 'signin'): Promise<void> {
     const subject =
       purpose === 'signup'
@@ -54,12 +41,28 @@ class EmailService {
       </html>
     `;
 
-    await this.transporter.sendMail({
-      from: `"My Notes" <${process.env.EMAIL_USER}>`,
-      to: email,
-      subject,
-      html,
+    const senderEmail = process.env.BREVO_SENDER_EMAIL || process.env.EMAIL_USER;
+
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'api-key': process.env.BREVO_API_KEY!,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        sender: { name: 'My Notes', email: senderEmail },
+        to: [{ email }],
+        subject,
+        htmlContent: html,
+      }),
     });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error('Brevo API error:', response.status, errorData);
+      throw new Error(`Email sending failed: ${response.status}`);
+    }
   }
 }
 
