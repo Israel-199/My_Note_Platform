@@ -1,8 +1,16 @@
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 dotenv.config();
-const resend = new Resend(process.env.RESEND_API_KEY);
 class EmailService {
+    constructor() {
+        this.transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+        });
+    }
     async sendOTP(email, otp, purpose) {
         const subject = purpose === 'signup'
             ? 'Welcome to My Notes - Verify Your Email'
@@ -39,8 +47,8 @@ class EmailService {
         </body>
       </html>
     `;
-        await resend.emails.send({
-            from: "My Notes <onboarding@resend.dev>",
+        await this.transporter.sendMail({
+            from: `"My Notes" <${process.env.EMAIL_USER}>`,
             to: email,
             subject,
             html,

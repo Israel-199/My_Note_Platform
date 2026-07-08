@@ -1,4 +1,6 @@
 declare class EmailService {
+    private transporter;
+    constructor();
     sendOTP(email: string, otp: string, purpose: 'signup' | 'signin'): Promise<void>;
 }
 declare const _default: EmailService;
