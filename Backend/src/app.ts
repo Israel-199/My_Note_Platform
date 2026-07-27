@@ -27,6 +27,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://my-note-platform-76tm-674x2er70.vercel.app",
+      "https://my-note-platform-76tm-25er32xfa.vercel.app",
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
