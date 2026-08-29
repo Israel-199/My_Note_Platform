@@ -2,7 +2,7 @@ import axios from 'axios';
 import { SignupData, SigninData } from '../types';
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_URL;
+  'https://my-note-platform-8-pziu.onrender.com';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
